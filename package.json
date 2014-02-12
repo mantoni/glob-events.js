@@ -27,7 +27,8 @@
     "jslint"        : "~0.2.7",
     "browserify"    : ">=3.19 <4",
     "coverify"      : "~1.0.6",
-    "mochify"       : "~0.3.1"
+    "mochify"       : "~0.3.1",
+    "bench"         : "~0.3.5"
   },
   "files"           : ["lib", "README.md", "CHANGES.md", "LICENSE"],
   "license"         : "MIT"
