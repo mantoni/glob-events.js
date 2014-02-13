@@ -26,13 +26,9 @@ var emitter = new Emitter();
 ## Emitter API
 
 - `emit(event[, ...])`
-- `addListener(event, callback)`
-- `removeListener(event, callback)`
-- `removeAllListeners([event])`
-- `removeListenersMatching(event)`
-- `listeners([name])`
-- `listenersMatching(name)`
-- `_invoke(iterator, args)`
+- `addListener(event, fn)`
+- `removeListener(event, fn)`
+- `listeners([event][, options])`
 
 ## License
 
