@@ -6,6 +6,13 @@ Repository: <https://github.com/mantoni/glob-events.js>
 
 ---
 
+## Features
+
+- Node.js EventEmitter compatible API
+- Register listeners with glob event names (`*` and `**`)
+- Emit events with glob event names (`*` and `**`)
+- 100% test coverage
+
 ## Install with npm
 
 ```
@@ -25,11 +32,29 @@ var emitter = new Emitter();
 
 ## Emitter API
 
-- `emit(event[, ...])`
-- `addListener(event, fn)`
-- `removeListener(event, fn)`
-- `listeners([event][, options])`
+- `emit(event[, ...])`: Invokes all listeners registered for the given event
+  with the optional arguments. Matching rules are applied on the event name as
+  descibed in the [glob-tree match expressions][].
+- `addListener(event, fn)` / `on(event, fn)`: Registers a listener for an event
+- `removeListener(event, fn)`: Unregisteres a listener for an event
+- `removeAllListeners([event])`: Unregisters all listeners, or all listeners
+  for the given event. Matching rules are not applied.
+- `listeners([event][, options])`: Returns all listeners, or all listeners
+  for the given event. Matching rules are applied on the event name as
+  described in the [glob-tree match expressions][]. The options are passed on
+  to the [glob-tree iterarator][].
+
+## TODO
+
+- once(event, fn)
+- setMaxListeners(n)
+- listenerCount()
+- emit newListener events
+- emit removeListener events
 
 ## License
 
 MIT
+
+[glob-tree match expressions]: https://github.com/mantoni/glob-tree.js#match-expressions
+[glob-tree iterator]: https://github.com/mantoni/glob-tree.js#node-api
