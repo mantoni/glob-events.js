@@ -36,4 +36,8 @@ describe('addListener', function () {
     }, TypeError);
   });
 
+  it('is also called "on"', function () {
+    assert.strictEqual(Emitter.prototype.on, Emitter.prototype.addListener);
+  });
+
 });
