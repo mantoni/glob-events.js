@@ -41,16 +41,17 @@ var emitter = new Emitter();
   for the given event. Matching rules are not applied.
 - `listeners([event][, options])`: Returns all listeners, or all listeners
   for the given event. Matching rules are applied on the event name as
-  described in the [glob-tree match expressions][]. The options are passed on
-  to the [glob-tree iterarator][].
+  described in the [glob-tree match expressions][].
 
-### Emit options
+### Options
 
-The first argument passed to `emit` can be an object with these properties:
+The `options` argument can have these properties:
 
-- `event`: The event name
 - `matchers`: Emit to matchers, defaults to `true`
 - `listeners`: Emit to listeners, defaults to `true`
+
+The first argument passed to `emit` can be an object with an `event` property
+and any of the above options.
 
 ## TODO
 
@@ -65,4 +66,3 @@ The first argument passed to `emit` can be an object with these properties:
 MIT
 
 [glob-tree match expressions]: https://github.com/mantoni/glob-tree.js#match-expressions
-[glob-tree iterator]: https://github.com/mantoni/glob-tree.js#node-api

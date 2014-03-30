@@ -53,27 +53,14 @@ describe('listeners', function () {
     assert.deepEqual(a, [fn1, fn2]);
   });
 
-  it('allows to exclude matchers', function () {
+  it('allows to exclude listeners', function () {
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('*', fn1);
     e.addListener('b', fn2);
 
     var a = e.listeners('*', {
-      matchers : false
-    });
-
-    assert.deepEqual(a, [fn2]);
-  });
-
-  it('allows to only include matchers', function () {
-    var fn1 = noop();
-    var fn2 = noop();
-    e.addListener('*', fn1);
-    e.addListener('b', fn2);
-
-    var a = e.listeners('*', {
-      onlyMatchers : true
+      listeners : false
     });
 
     assert.deepEqual(a, [fn1]);
@@ -103,17 +90,17 @@ describe('listeners', function () {
     assert.deepEqual(a, []);
   });
 
-  it('allows to only include matchers', function () {
+  it('still includes exact match if matchers are excluded', function () {
     var fn1 = noop();
     var fn2 = noop();
-    e.addListener('a.*', fn1);
-    e.addListener('a.b', fn2);
+    e.addListener('*', fn1);
+    e.addListener('b', fn2);
 
-    var a = e.listeners('a.b', {
-      onlyMatchers : true
+    var a = e.listeners('*', {
+      matchers : false
     });
 
-    assert.deepEqual(a, [fn1]);
+    assert.deepEqual(a, [fn2]);
   });
 
 });
