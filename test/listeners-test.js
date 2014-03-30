@@ -103,4 +103,13 @@ describe('listeners', function () {
     assert.deepEqual(a, [fn2]);
   });
 
+  it('returns original once listener', function () {
+    var f = noop();
+    e.once('a', f);
+
+    var a = e.listeners();
+
+    assert.deepEqual(a, [f]);
+  });
+
 });

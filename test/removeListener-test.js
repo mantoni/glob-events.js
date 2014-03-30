@@ -13,7 +13,9 @@ var Emitter = require('../lib/events').Emitter;
 
 
 function noop() {
-  return function () { return; };
+  return function f() {
+    f.called = true;
+  };
 }
 noop()();
 
@@ -46,6 +48,16 @@ describe('removeListener', function () {
     e.removeListener('a.b', fn1);
 
     assert.deepEqual(e.listeners('a.b'), [fn2]);
+  });
+
+  it('removes once listener', function () {
+    var f = noop();
+    e.once('a', f);
+
+    e.removeListener('a', f);
+    e.emit('a');
+
+    assert(!f.called);
   });
 
 });

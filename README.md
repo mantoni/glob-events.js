@@ -36,6 +36,8 @@ var emitter = new Emitter();
   with the optional arguments. Matching rules are applied on the event name as
   descibed in the [glob-tree match expressions][].
 - `addListener(event, fn)` / `on(event, fn)`: Registers a listener for an event
+- `once(event, fn)`: Registers a listener for an event that is automatically
+  removed on the first invokation
 - `removeListener(event, fn)`: Unregisteres a listener for an event
 - `removeAllListeners([event])`: Unregisters all listeners, or all listeners
   for the given event. Matching rules are not applied.
@@ -55,7 +57,6 @@ and any of the above options.
 
 ## TODO
 
-- once(event, fn)
 - setMaxListeners(n)
 - listenerCount()
 - emit newListener events
