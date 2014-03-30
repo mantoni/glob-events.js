@@ -5,7 +5,7 @@
  *
  * @license MIT
  */
-/*globals describe, it*/
+/*globals describe, it, beforeEach*/
 'use strict';
 
 var assert = require('assert');
@@ -19,25 +19,25 @@ noop()();
 
 
 describe('removeListener', function () {
+  var e;
+
+  beforeEach(function () {
+    e = new Emitter();
+  });
 
   it('throws if first arg is null', function () {
-    var e = new Emitter();
-
     assert.throws(function () {
       e.removeListener(null, noop());
     }, TypeError);
   });
 
   it('throws if second arg is null', function () {
-    var e = new Emitter();
-
     assert.throws(function () {
       e.removeListener('a.b', null);
     }, TypeError);
   });
 
   it('removes the given listener', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('a.b', fn1);

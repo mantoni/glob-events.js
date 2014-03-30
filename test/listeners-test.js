@@ -5,7 +5,7 @@
  *
  * @license MIT
  */
-/*globals describe, it*/
+/*globals describe, it, beforeEach*/
 'use strict';
 
 var assert = require('assert');
@@ -19,17 +19,19 @@ noop()();
 
 
 describe('listeners', function () {
+  var e;
+
+  beforeEach(function () {
+    e = new Emitter();
+  });
 
   it('returns an empty array by default', function () {
-    var e = new Emitter();
-
     var a = e.listeners();
 
     assert.deepEqual(a, []);
   });
 
   it('returns previously added listeners', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('a', fn1);
@@ -41,7 +43,6 @@ describe('listeners', function () {
   });
 
   it('returns matching listeners', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('*', fn1);
@@ -53,7 +54,6 @@ describe('listeners', function () {
   });
 
   it('allows to exclude matchers', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('*', fn1);
@@ -67,7 +67,6 @@ describe('listeners', function () {
   });
 
   it('allows to only include matchers', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('*', fn1);
@@ -81,7 +80,6 @@ describe('listeners', function () {
   });
 
   it('returns matchers', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('**', fn1);
@@ -93,7 +91,6 @@ describe('listeners', function () {
   });
 
   it('allows to exclude matchers', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('**', fn1);
@@ -107,7 +104,6 @@ describe('listeners', function () {
   });
 
   it('allows to only include matchers', function () {
-    var e   = new Emitter();
     var fn1 = noop();
     var fn2 = noop();
     e.addListener('a.*', fn1);

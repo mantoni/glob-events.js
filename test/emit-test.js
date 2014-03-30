@@ -5,7 +5,7 @@
  *
  * @license MIT
  */
-/*globals describe, it*/
+/*globals describe, it, beforeEach*/
 'use strict';
 
 var assert = require('assert');
@@ -25,17 +25,19 @@ function func() {
 
 
 describe('emit', function () {
+  var e;
+
+  beforeEach(function () {
+    e = new Emitter();
+  });
 
   it('throws if first arg is null', function () {
-    var e = new Emitter();
-
     assert.throws(function () {
       e.emit(null);
     }, TypeError);
   });
 
   it('invokes listeners with args', function () {
-    var e  = new Emitter();
     var l1 = func();
     var l2 = func();
     e.addListener('a', l1);
@@ -50,7 +52,6 @@ describe('emit', function () {
   });
 
   it('invokes matching listeners', function () {
-    var e  = new Emitter();
     var l1 = func();
     var l2 = func();
     e.addListener('a.b', l1);
@@ -63,7 +64,6 @@ describe('emit', function () {
   });
 
   it('does not invoke non-matching listeners', function () {
-    var e  = new Emitter();
     var l1 = func();
     var l2 = func();
     e.addListener('b.a', l1);
@@ -76,7 +76,6 @@ describe('emit', function () {
   });
 
   it('invokes matchers', function () {
-    var e  = new Emitter();
     var l1 = func();
     var l2 = func();
     e.addListener('**', l1);

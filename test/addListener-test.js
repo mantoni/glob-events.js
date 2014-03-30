@@ -5,7 +5,7 @@
  *
  * @license MIT
  */
-/*globals describe, it*/
+/*globals describe, it, beforeEach*/
 'use strict';
 
 var assert = require('assert');
@@ -13,18 +13,19 @@ var Emitter = require('../lib/events').Emitter;
 
 
 describe('addListener', function () {
+  var e;
+
+  beforeEach(function () {
+    e = new Emitter();
+  });
 
   it('throws if first arg is null', function () {
-    var e = new Emitter();
-
     assert.throws(function () {
       e.addListener(null);
     }, TypeError);
   });
 
   it('throws if second arg is not a function', function () {
-    var e = new Emitter();
-
     assert.throws(function () {
       e.addListener('a.b', null);
     }, TypeError);
