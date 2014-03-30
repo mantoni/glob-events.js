@@ -112,4 +112,13 @@ describe('listeners', function () {
     assert.deepEqual(a, [f]);
   });
 
+  it('handles options as the only argument correctly', function () {
+    var f = noop();
+    e.addListener('*', f);
+
+    var a = e.listeners({ matchers : false });
+
+    assert.deepEqual(a, []);
+  });
+
 });
