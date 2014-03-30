@@ -87,4 +87,47 @@ describe('emit', function () {
     assert.equal(l2.calls.length, 1);
   });
 
+  it('accepts config object with event', function () {
+    var l1 = func();
+    var l2 = func();
+    e.addListener('*', l1);
+    e.addListener('a', l2);
+
+    assert.doesNotThrow(function () {
+      e.emit({ event : 'a' });
+    });
+    assert.equal(l1.calls.length, 1);
+    assert.equal(l2.calls.length, 1);
+  });
+
+  it('throws if config object is empty', function () {
+    assert.throws(function () {
+      e.emit({});
+    }, TypeError);
+  });
+
+  it('allows to exclude matchers', function () {
+    var l1 = func();
+    var l2 = func();
+    e.addListener('*', l1);
+    e.addListener('a', l2);
+
+    e.emit({ event : 'a', matchers : false });
+
+    assert.equal(l1.calls.length, 0);
+    assert.equal(l2.calls.length, 1);
+  });
+
+  it('allows to exclude listeners', function () {
+    var l1 = func();
+    var l2 = func();
+    e.addListener('*', l1);
+    e.addListener('a', l2);
+
+    e.emit({ event : 'a', listeners : false });
+
+    assert.equal(l1.calls.length, 1);
+    assert.equal(l2.calls.length, 0);
+  });
+
 });

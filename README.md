@@ -44,6 +44,14 @@ var emitter = new Emitter();
   described in the [glob-tree match expressions][]. The options are passed on
   to the [glob-tree iterarator][].
 
+### Emit options
+
+The first argument passed to `emit` can be an object with these properties:
+
+- `event`: The event name
+- `matchers`: Emit to matchers, defaults to `true`
+- `listeners`: Emit to listeners, defaults to `true`
+
 ## TODO
 
 - once(event, fn)
