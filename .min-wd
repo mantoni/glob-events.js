@@ -7,5 +7,9 @@
   }, {
     "name": "internet explorer",
     "version": "10"
+  }, {
+    "name": "internet explorer",
+    "version": "9",
+    "url": "http://maxantoni.de/doctype.html"
   }]
 }
