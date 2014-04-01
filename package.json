@@ -20,7 +20,7 @@
     "url"           : "https://github.com/mantoni/glob-events.js.git"
   },
   "dependencies"    : {
-    "glob-store"    : "~0.1.0"
+    "glob-store"    : "~0.2.0"
   },
   "devDependencies" : {
     "mocha"         : ">=1.17 <2",
