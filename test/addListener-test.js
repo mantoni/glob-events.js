@@ -10,6 +10,7 @@
 
 var assert = require('assert');
 var Emitter = require('../lib/events').Emitter;
+var util = require('./util');
 
 
 describe('addListener', function () {
@@ -39,6 +40,26 @@ describe('addListener', function () {
 
   it('is also called "on"', function () {
     assert.strictEqual(Emitter.prototype.on, Emitter.prototype.addListener);
+  });
+
+  it('emits "newListener" event', function () {
+    var s = util.stub();
+    var f = util.noop();
+
+    e.addListener('newListener', s);
+    e.addListener('a', f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+  });
+
+  it('does not emit "newListener" event to matchers', function () {
+    var s = util.stub();
+
+    e.addListener('*', s);
+    e.addListener('a', util.noop());
+
+    assert.equal(s.calls.length, 0);
   });
 
 });

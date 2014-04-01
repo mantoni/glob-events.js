@@ -55,11 +55,15 @@ The `options` argument can have these properties:
 The first argument passed to `emit` can be an object with an `event` property
 and any of the above options.
 
+### Events
+
+- `newListener`: Emitted by `newListener` and `once` with the event name and
+  the new listener function. Matchers will not receive this event.
+
 ## TODO
 
 - setMaxListeners(n)
 - listenerCount()
-- emit newListener events
 - emit removeListener events
 
 ## License
