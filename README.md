@@ -57,14 +57,15 @@ and any of the above options.
 
 ### Events
 
-- `newListener`: Emitted by `newListener` and `once` with the event name and
-  the new listener function. Matchers will not receive this event.
+- `newListener`: Emitted by `addListener`, `on` and `once` with the event name
+  and the new listener function. Matchers will not receive this event.
+- `removeListener`: Emitted by `removeListener` and `removeAllListeners` with
+  the event name and the removed listener function. Matchers will not receive
+  this event.
 
 ## TODO
 
 - setMaxListeners(n)
-- listenerCount()
-- emit removeListener events
 
 ## License
 

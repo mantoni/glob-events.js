@@ -53,4 +53,27 @@ describe('removeListener', function () {
     assert(!f.calls.length);
   });
 
+  it('emits "removeListener" event', function () {
+    var s = util.stub();
+    var f = util.noop();
+
+    e.addListener('removeListener', s);
+    e.addListener('a', f);
+    e.removeListener('a', f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+  });
+
+  it('does not emit "removeListener" event to matchers', function () {
+    var s = util.stub();
+    var f = util.noop();
+
+    e.addListener('*', s);
+    e.addListener('a', f);
+    e.removeListener('a', f);
+
+    assert.equal(s.calls.length, 0);
+  });
+
 });
