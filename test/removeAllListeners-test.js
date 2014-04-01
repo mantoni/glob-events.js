@@ -10,12 +10,7 @@
 
 var assert = require('assert');
 var Emitter = require('../lib/events').Emitter;
-
-
-function noop() {
-  return function () { return; };
-}
-noop()();
+var util = require('./util');
 
 
 describe('removeAllListeners', function () {
@@ -26,8 +21,8 @@ describe('removeAllListeners', function () {
   });
 
   it('removes all listeners if called without args', function () {
-    e.addListener('a', noop());
-    e.addListener('b.c', noop());
+    e.addListener('a', util.noop());
+    e.addListener('b.c', util.noop());
 
     e.removeAllListeners();
 
@@ -35,9 +30,9 @@ describe('removeAllListeners', function () {
   });
 
   it('removes the named listeners', function () {
-    var b = noop();
-    e.addListener('a', noop());
-    e.addListener('a', noop());
+    var b = util.noop();
+    e.addListener('a', util.noop());
+    e.addListener('a', util.noop());
     e.addListener('b', b);
 
     e.removeAllListeners('a');
@@ -46,8 +41,8 @@ describe('removeAllListeners', function () {
   });
 
   it('removes only the exact matching listeners', function () {
-    var b = noop();
-    e.addListener('a.*', noop());
+    var b = util.noop();
+    e.addListener('a.*', util.noop());
     e.addListener('a.b', b);
 
     e.removeAllListeners('a.*');

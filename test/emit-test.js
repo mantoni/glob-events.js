@@ -10,18 +10,7 @@
 
 var assert = require('assert');
 var Emitter = require('../lib/events').Emitter;
-
-
-function func() {
-  function f() {
-    f.calls.push({
-      scope : this,
-      args  : Array.prototype.slice.call(arguments)
-    });
-  }
-  f.calls = [];
-  return f;
-}
+var util = require('./util');
 
 
 describe('emit', function () {
@@ -38,8 +27,8 @@ describe('emit', function () {
   });
 
   it('invokes listeners with args', function () {
-    var l1 = func();
-    var l2 = func();
+    var l1 = util.stub();
+    var l2 = util.stub();
     e.addListener('a', l1);
     e.addListener('a', l2);
 
@@ -52,8 +41,8 @@ describe('emit', function () {
   });
 
   it('invokes matching listeners', function () {
-    var l1 = func();
-    var l2 = func();
+    var l1 = util.stub();
+    var l2 = util.stub();
     e.addListener('a.b', l1);
     e.addListener('a.c', l2);
 
@@ -64,8 +53,8 @@ describe('emit', function () {
   });
 
   it('does not invoke non-matching listeners', function () {
-    var l1 = func();
-    var l2 = func();
+    var l1 = util.stub();
+    var l2 = util.stub();
     e.addListener('b.a', l1);
     e.addListener('a.b.c', l2);
 
@@ -76,8 +65,8 @@ describe('emit', function () {
   });
 
   it('invokes matchers', function () {
-    var l1 = func();
-    var l2 = func();
+    var l1 = util.stub();
+    var l2 = util.stub();
     e.addListener('**', l1);
     e.addListener('a.*', l2);
 
@@ -88,8 +77,8 @@ describe('emit', function () {
   });
 
   it('accepts config object with event', function () {
-    var l1 = func();
-    var l2 = func();
+    var l1 = util.stub();
+    var l2 = util.stub();
     e.addListener('*', l1);
     e.addListener('a', l2);
 
@@ -107,8 +96,8 @@ describe('emit', function () {
   });
 
   it('allows to exclude matchers', function () {
-    var l1 = func();
-    var l2 = func();
+    var l1 = util.stub();
+    var l2 = util.stub();
     e.addListener('*', l1);
     e.addListener('a', l2);
 
@@ -119,8 +108,8 @@ describe('emit', function () {
   });
 
   it('allows to exclude listeners', function () {
-    var l1 = func();
-    var l2 = func();
+    var l1 = util.stub();
+    var l2 = util.stub();
     e.addListener('*', l1);
     e.addListener('a', l2);
 

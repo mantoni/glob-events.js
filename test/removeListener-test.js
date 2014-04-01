@@ -10,14 +10,7 @@
 
 var assert = require('assert');
 var Emitter = require('../lib/events').Emitter;
-
-
-function noop() {
-  return function f() {
-    f.called = true;
-  };
-}
-noop()();
+var util = require('./util');
 
 
 describe('removeListener', function () {
@@ -29,7 +22,7 @@ describe('removeListener', function () {
 
   it('throws if first arg is null', function () {
     assert.throws(function () {
-      e.removeListener(null, noop());
+      e.removeListener(null, util.noop());
     }, TypeError);
   });
 
@@ -40,8 +33,8 @@ describe('removeListener', function () {
   });
 
   it('removes the given listener', function () {
-    var fn1 = noop();
-    var fn2 = noop();
+    var fn1 = util.noop();
+    var fn2 = util.noop();
     e.addListener('a.b', fn1);
     e.addListener('a.b', fn2);
 
@@ -51,13 +44,13 @@ describe('removeListener', function () {
   });
 
   it('removes once listener', function () {
-    var f = noop();
+    var f = util.stub();
     e.once('a', f);
 
     e.removeListener('a', f);
     e.emit('a');
 
-    assert(!f.called);
+    assert(!f.calls.length);
   });
 
 });

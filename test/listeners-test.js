@@ -10,12 +10,7 @@
 
 var assert = require('assert');
 var Emitter = require('../lib/events').Emitter;
-
-
-function noop() {
-  return function () { return; };
-}
-noop()();
+var util = require('./util');
 
 
 describe('listeners', function () {
@@ -32,8 +27,8 @@ describe('listeners', function () {
   });
 
   it('returns previously added listeners', function () {
-    var fn1 = noop();
-    var fn2 = noop();
+    var fn1 = util.noop();
+    var fn2 = util.noop();
     e.addListener('a', fn1);
     e.addListener('b.c', fn2);
 
@@ -43,8 +38,8 @@ describe('listeners', function () {
   });
 
   it('returns matching listeners', function () {
-    var fn1 = noop();
-    var fn2 = noop();
+    var fn1 = util.noop();
+    var fn2 = util.noop();
     e.addListener('*', fn1);
     e.addListener('b', fn2);
 
@@ -54,8 +49,8 @@ describe('listeners', function () {
   });
 
   it('allows to exclude listeners', function () {
-    var fn1 = noop();
-    var fn2 = noop();
+    var fn1 = util.noop();
+    var fn2 = util.noop();
     e.addListener('*', fn1);
     e.addListener('b', fn2);
 
@@ -67,8 +62,8 @@ describe('listeners', function () {
   });
 
   it('returns matchers', function () {
-    var fn1 = noop();
-    var fn2 = noop();
+    var fn1 = util.noop();
+    var fn2 = util.noop();
     e.addListener('**', fn1);
     e.addListener('a.*', fn2);
 
@@ -78,8 +73,8 @@ describe('listeners', function () {
   });
 
   it('allows to exclude matchers', function () {
-    var fn1 = noop();
-    var fn2 = noop();
+    var fn1 = util.noop();
+    var fn2 = util.noop();
     e.addListener('**', fn1);
     e.addListener('a.*', fn2);
 
@@ -91,8 +86,8 @@ describe('listeners', function () {
   });
 
   it('still includes exact match if matchers are excluded', function () {
-    var fn1 = noop();
-    var fn2 = noop();
+    var fn1 = util.noop();
+    var fn2 = util.noop();
     e.addListener('*', fn1);
     e.addListener('b', fn2);
 
@@ -104,7 +99,7 @@ describe('listeners', function () {
   });
 
   it('returns original once listener', function () {
-    var f = noop();
+    var f = util.noop();
     e.once('a', f);
 
     var a = e.listeners();
@@ -113,7 +108,7 @@ describe('listeners', function () {
   });
 
   it('handles options as the only argument correctly', function () {
-    var f = noop();
+    var f = util.noop();
     e.addListener('*', f);
 
     var a = e.listeners({ matchers : false });
