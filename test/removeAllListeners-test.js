@@ -54,7 +54,6 @@ describe('removeAllListeners', function () {
     var a = util.noop();
     var b = util.noop();
     var s = util.stub();
-
     e.addListener('removeListener', s);
     e.addListener('a.*', a);
     e.addListener('a.b', b);
@@ -72,7 +71,6 @@ describe('removeAllListeners', function () {
     var b = util.noop();
     var c = util.noop();
     var s = util.stub();
-
     e.addListener('removeListener', s);
     e.addListener('a.*', a);
     e.addListener('a.b', b);
@@ -95,6 +93,18 @@ describe('removeAllListeners', function () {
     e.removeAllListeners();
 
     assert.equal(s.calls.length, 0);
+  });
+
+  it('emits function added with once', function () {
+    var s = util.stub();
+    var f = util.noop();
+    e.addListener('removeListener', s);
+    e.once('a', f);
+
+    e.removeAllListeners('a');
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
 });
