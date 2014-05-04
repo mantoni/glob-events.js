@@ -1,6 +1,6 @@
 {
   "name"            : "glob-events",
-  "version"         : "0.3.0",
+  "version"         : "0.4.0",
   "description"     : "Event emitter with glob support on event names",
   "keywords"        : ["event", "emitter", "glob", "listener"],
   "author"          : "Maximilian Antoni (http://maxantoni.de)",

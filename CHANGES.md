@@ -1,5 +1,12 @@
 # Changes
 
+## 0.4.0
+
+- Pass on given event object as scope
+- Expose event name on scope
+- Expose args on scope
+- Expose given options on scope
+
 ## 0.3.0
 
 - Support event object with options to disable `matchers` and `listeners`
