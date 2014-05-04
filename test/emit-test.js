@@ -119,4 +119,69 @@ describe('emit', function () {
     assert.equal(l2.calls.length, 0);
   });
 
+  it('exposes event in scope', function () {
+    var l = util.stub();
+    e.addListener('a', l);
+
+    e.emit('a');
+
+    assert.equal(l.calls[0].scope.event, 'a');
+  });
+
+  it('exposes args in scope', function () {
+    var l = util.stub();
+    e.addListener('a', l);
+
+    e.emit('a', 42, [], null, 'str');
+
+    assert.deepEqual(l.calls[0].scope.args, [42, [], null, 'str']);
+  });
+
+  it('defaults arg to empty array', function () {
+    var l = util.stub();
+    e.addListener('a', l);
+
+    e.emit('a');
+
+    assert.deepEqual(l.calls[0].scope.args, []);
+  });
+
+  it('exposes opts in scope', function () {
+    var l = util.stub();
+    e.addListener('a', l);
+
+    e.emit({
+      event     : 'a',
+      matchers  : true,
+      listeners : true
+    });
+
+    assert(l.calls[0].scope.matchers);
+    assert(l.calls[0].scope.listeners);
+  });
+
+  it('does not define undefined opts', function () {
+    var l = util.stub();
+    e.addListener('a', l);
+
+    e.emit({
+      event : 'a'
+    });
+
+    assert.strictEqual(l.calls[0].scope.matchers, undefined);
+    assert.strictEqual(l.calls[0].scope.listeners, undefined);
+  });
+
+  it('passes on custom properties on scope', function () {
+    var l = util.stub();
+    e.addListener('a', l);
+
+    e.emit({
+      event  : 'a',
+      answer : 42
+    });
+
+    assert.equal(l.calls[0].scope.answer, 42);
+  });
+
 });
