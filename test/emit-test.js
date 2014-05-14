@@ -184,4 +184,13 @@ describe('emit', function () {
     assert.equal(l.calls[0].scope.answer, 42);
   });
 
+  it('invokes once listener with scope', function () {
+    var l = util.stub();
+    e.once('a', l);
+
+    e.emit('a');
+
+    assert.equal(l.calls[0].scope.event, 'a');
+  });
+
 });
