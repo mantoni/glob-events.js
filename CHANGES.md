@@ -1,5 +1,9 @@
 # Changes
 
+## 0.4.1
+
+- Invoke once listener with scope object
+
 ## 0.4.0
 
 - Pass on given event object as scope
