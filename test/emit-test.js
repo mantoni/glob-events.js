@@ -137,7 +137,7 @@ describe('emit', function () {
     assert.deepEqual(l.calls[0].scope.args, [42, [], null, 'str']);
   });
 
-  it('defaults arg to empty array', function () {
+  it('defaults args to empty array', function () {
     var l = util.stub();
     e.addListener('a', l);
 
