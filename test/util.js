@@ -8,12 +8,15 @@
 'use strict';
 
 
-exports.stub = function stub() {
+exports.stub = function stub(fn) {
   function f() {
     f.calls.push({
       scope : this,
       args  : Array.prototype.slice.call(arguments)
     });
+    if (fn) {
+      return fn.apply(this, arguments);
+    }
   }
   f.calls = [];
   return f;

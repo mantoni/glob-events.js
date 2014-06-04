@@ -26,76 +26,13 @@ describe('listeners', function () {
     assert.deepEqual(a, []);
   });
 
-  it('returns previously added listeners', function () {
-    var fn1 = util.noop();
-    var fn2 = util.noop();
-    e.addListener('a', fn1);
-    e.addListener('b.c', fn2);
+  it('passes args to iterator', function () {
+    e.iterator = util.stub(e.iterator);
 
-    var a = e.listeners();
+    e.listeners('abc', { matchers : false });
 
-    assert.deepEqual(a, [fn1, fn2]);
-  });
-
-  it('returns matching listeners', function () {
-    var fn1 = util.noop();
-    var fn2 = util.noop();
-    e.addListener('*', fn1);
-    e.addListener('b', fn2);
-
-    var a = e.listeners('*');
-
-    assert.deepEqual(a, [fn1, fn2]);
-  });
-
-  it('allows to exclude listeners', function () {
-    var fn1 = util.noop();
-    var fn2 = util.noop();
-    e.addListener('*', fn1);
-    e.addListener('b', fn2);
-
-    var a = e.listeners('*', {
-      listeners : false
-    });
-
-    assert.deepEqual(a, [fn1]);
-  });
-
-  it('returns matchers', function () {
-    var fn1 = util.noop();
-    var fn2 = util.noop();
-    e.addListener('**', fn1);
-    e.addListener('a.*', fn2);
-
-    var a = e.listeners('a.b');
-
-    assert.deepEqual(a, [fn1, fn2]);
-  });
-
-  it('allows to exclude matchers', function () {
-    var fn1 = util.noop();
-    var fn2 = util.noop();
-    e.addListener('**', fn1);
-    e.addListener('a.*', fn2);
-
-    var a = e.listeners('a.b', {
-      matchers : false
-    });
-
-    assert.deepEqual(a, []);
-  });
-
-  it('still includes exact match if matchers are excluded', function () {
-    var fn1 = util.noop();
-    var fn2 = util.noop();
-    e.addListener('*', fn1);
-    e.addListener('b', fn2);
-
-    var a = e.listeners('*', {
-      matchers : false
-    });
-
-    assert.deepEqual(a, [fn2]);
+    assert.equal(e.iterator.calls.length, 1);
+    assert.deepEqual(e.iterator.calls[0].args, ['abc', { matchers : false }]);
   });
 
   it('returns original once listener', function () {
@@ -105,15 +42,6 @@ describe('listeners', function () {
     var a = e.listeners();
 
     assert.deepEqual(a, [f]);
-  });
-
-  it('handles options as the only argument correctly', function () {
-    var f = util.noop();
-    e.addListener('*', f);
-
-    var a = e.listeners({ matchers : false });
-
-    assert.deepEqual(a, []);
   });
 
 });

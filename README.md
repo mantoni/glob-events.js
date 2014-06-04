@@ -44,6 +44,9 @@ var emitter = new Emitter();
 - `listeners([event][, options])`: Returns all listeners, or all listeners
   for the given event. Matching rules are applied on the event name as
   described in the [glob-tree match expressions][].
+- `iterator([event][, options])`: Exposes the iterator used to retrieve all
+  listeners, or all listeners for a given event. Note: When using `once`, the
+  function returned by the iterator is not the same as the registered function.
 
 ### Options
 
