@@ -1,5 +1,9 @@
 # Changes
 
+## 0.5.0
+
+- Expose iterator used to retrieve listeners
+
 ## 0.4.1
 
 - Invoke once listener with scope object
