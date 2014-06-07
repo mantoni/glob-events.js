@@ -1,5 +1,10 @@
 # Changes
 
+## 0.6.0
+
+- Invoke `'error'` listener if there was an exception
+- Make sure all listeners are invoked if one is throwing
+
 ## 0.5.0
 
 - Expose iterator used to retrieve listeners
