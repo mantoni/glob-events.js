@@ -58,6 +58,12 @@ The `options` argument can have these properties:
 The first argument passed to `emit` can be an object with an `event` property
 and any of the above options.
 
+### Scope
+
+Listeners are invoked with a special scope object. If an object is passed to
+`emit` as the event (see Options), that object is used as the scope object.
+In addition, the arguments array is exposed via `this.args`.
+
 ### Events
 
 - `newListener`: Emitted by `addListener`, `on` and `once` with the event name
@@ -65,6 +71,9 @@ and any of the above options.
 - `removeListener`: Emitted by `removeListener` and `removeAllListeners` with
   the event name and the removed listener function. Matchers will not receive
   this event.
+- `error`: Emitted by `emit` if a listener throws an exception. The only
+  argument is the caught exception. The scope of the listener is used to expose
+  the original event name and arguments (`this.event` and `this.args`).
 
 ## TODO
 
