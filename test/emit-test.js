@@ -193,4 +193,58 @@ describe('emit', function () {
     assert.equal(l.calls[0].scope.event, 'a');
   });
 
+  it('invokes next listener if previous threw', function () {
+    var error = new Error();
+    e.addListener('a', function () {
+      throw error;
+    });
+    var l = util.stub();
+    e.addListener('a', l);
+
+    var err;
+    try {
+      e.emit('a');
+    } catch (e) {
+      err = e;
+    }
+    assert.strictEqual(err, error);
+
+    assert.equal(l.calls.length, 1);
+  });
+
+  it('invokes a registered error listener instead of throwing', function () {
+    var error = new Error();
+    e.addListener('a', function () {
+      throw error;
+    });
+    var l = util.stub();
+    e.addListener('error', l);
+
+    e.emit('a', 42, 'xyz');
+
+    assert.equal(l.calls.length, 1);
+    assert.deepEqual(l.calls[0].args, [error]);
+    assert.deepEqual(l.calls[0].scope.event, 'a');
+    assert.deepEqual(l.calls[0].scope.args, [42, 'xyz']);
+  });
+
+  it('does not count wildcard listeners as error handlers', function () {
+    var error = new Error();
+    e.addListener('a', function () {
+      throw error;
+    });
+    var l = util.stub();
+    e.addListener('*', l);
+
+    var err;
+    try {
+      e.emit('a', 42);
+    } catch (e) {
+      err = e;
+    }
+    assert.strictEqual(err, error);
+    assert.equal(l.calls.length, 1);
+    assert.deepEqual(l.calls[0].args, [42]);
+  });
+
 });
