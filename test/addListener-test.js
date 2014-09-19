@@ -62,4 +62,21 @@ describe('addListener', function () {
     assert.equal(s.calls.length, 0);
   });
 
+  it('allows first argument to be object with event property', function () {
+    assert.doesNotThrow(function () {
+      e.addListener({ event : 'a' }, util.noop());
+    });
+  });
+
+  it('emits "newListener" event if configured with object', function () {
+    var s = util.stub();
+    var f = util.noop();
+
+    e.addListener('newListener', s);
+    e.addListener({ event : 'a' }, f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+  });
+
 });

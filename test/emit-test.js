@@ -193,6 +193,37 @@ describe('emit', function () {
     assert.equal(l.calls[0].scope.event, 'a');
   });
 
+  it('invokes listener with configured scope', function () {
+    var l = util.stub();
+    var s = {};
+
+    e.addListener({ event : 'a', scope : s }, l);
+    e.emit('a');
+
+    assert.strictEqual(l.calls[0].scope, s);
+  });
+
+  it('invokes once listener with configured scope', function () {
+    var l = util.stub();
+    var s = {};
+
+    e.once({ event : 'a', scope : s }, l);
+    e.emit('a');
+
+    assert.strictEqual(l.calls[0].scope, s);
+  });
+
+  it('invokes error listener with configured scope', function () {
+    var l = util.stub();
+    var s = {};
+
+    e.addListener({ event : 'error', scope : s }, l);
+    e.addListener('a', function () { throw new Error(); });
+    e.emit('a');
+
+    assert.strictEqual(l.calls[0].scope, s);
+  });
+
   it('invokes next listener if previous threw', function () {
     var error = new Error();
     e.addListener('a', function () {
