@@ -34,7 +34,7 @@ describe('iterator', function () {
 
     var i = e.iterator();
 
-    assert.deepEqual(i.toArray(), [fn1, fn2]);
+    assert.deepEqual(i.toArray(), [{ fn : fn1 }, { fn : fn2 }]);
   });
 
   it('returns matching listeners', function () {
@@ -45,7 +45,7 @@ describe('iterator', function () {
 
     var i = e.iterator('*');
 
-    assert.deepEqual(i.toArray(), [fn1, fn2]);
+    assert.deepEqual(i.toArray(), [{ fn : fn1 }, { fn : fn2 }]);
   });
 
   it('allows to exclude listeners', function () {
@@ -58,7 +58,7 @@ describe('iterator', function () {
       listeners : false
     });
 
-    assert.deepEqual(i.toArray(), [fn1]);
+    assert.deepEqual(i.toArray(), [{ fn : fn1 }]);
   });
 
   it('returns matchers', function () {
@@ -69,7 +69,7 @@ describe('iterator', function () {
 
     var i = e.iterator('a.b');
 
-    assert.deepEqual(i.toArray(), [fn1, fn2]);
+    assert.deepEqual(i.toArray(), [{ fn : fn1 }, { fn : fn2 }]);
   });
 
   it('allows to exclude matchers', function () {
@@ -95,7 +95,7 @@ describe('iterator', function () {
       matchers : false
     });
 
-    assert.deepEqual(i.toArray(), [fn2]);
+    assert.deepEqual(i.toArray(), [{ fn : fn2 }]);
   });
 
   it('does not return original once listener', function () {
@@ -104,7 +104,7 @@ describe('iterator', function () {
 
     var i = e.iterator();
 
-    assert.notStrictEqual(i.toArray()[0], f);
+    assert.notStrictEqual(i.toArray()[0].fn, f);
   });
 
   it('returned function for once listener invokes original', function () {
@@ -112,7 +112,7 @@ describe('iterator', function () {
     e.once('a', f);
 
     var i = e.iterator();
-    i.next()();
+    i.next().fn();
 
     assert.equal(f.calls.length, 1);
   });
