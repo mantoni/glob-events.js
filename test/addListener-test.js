@@ -10,7 +10,7 @@
 
 var assert = require('assert');
 var Emitter = require('../lib/events').Emitter;
-var util = require('./util');
+var util = require('./fixture/util');
 
 
 describe('addListener', function () {
