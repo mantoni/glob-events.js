@@ -88,4 +88,23 @@ describe('removeListener', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('does not emit event if nothing found', function () {
+    var s = util.stub();
+    e.addListener('removeListener', s);
+
+    e.removeListener('unknown', util.noop());
+
+    assert.equal(s.calls.length, 0);
+  });
+
+  it('does not remove other listener if nothing found', function () {
+    var s = util.stub();
+    e.addListener('a', s);
+
+    e.removeListener('a', util.noop());
+    e.emit('a');
+
+    assert.equal(s.calls.length, 1);
+  });
+
 });
