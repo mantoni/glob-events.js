@@ -8,7 +8,7 @@ Event emitter with glob support on event names, for node and the browser
 
 ## Features
 
-- Node.js EventEmitter compatible API
+- Node.js [EventEmitter][] compatible API
 - Register listeners with glob event names (`*` and `**`)
 - Emit events with glob event names (`*` and `**`)
 - 100% test coverage
@@ -81,8 +81,8 @@ emitter.addListener({
   the event name and the removed listener function. Matchers will not receive
   this event.
 - `error`: Emitted by `emit` if a listener throws an exception. The only
-  argument is the caught exception. The scope of the listener is used to expose
-  the original event name and arguments (`this.event` and `this.args`).
+  argument is the caught exception. The original event's scope is exposed on
+  `this.cause` (e.g. the original event is `this.cause.event`).
 
 ## TODO
 
@@ -95,4 +95,5 @@ MIT
 [Build Status]: http://img.shields.io/travis/mantoni/glob-events.js.svg
 [SemVer]: http://img.shields.io/:semver-%E2%9C%93-brightgreen.svg
 [License]: http://img.shields.io/npm/l/glob-events.svg
+[EventEmitter]: http://nodejs.org/api/events.html
 [glob-tree match expressions]: https://github.com/mantoni/glob-tree.js#match-expressions
