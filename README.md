@@ -1,10 +1,10 @@
-# glob-events.js [![Build Status](https://travis-ci.org/mantoni/glob-events.js.png?branch=master)](http://travis-ci.org/mantoni/glob-events.js)
+# glob-events.js
+
+[![Build Status]](https://travis-ci.org/mantoni/glob-events.js)
+[![SemVer]](http://semver.org)
+[![License]](https://github.com/mantoni/glob-events.js/blob/master/LICENSE)
 
 Event emitter with glob support on event names, for node and the browser
-
-Repository: <https://github.com/mantoni/glob-events.js>
-
----
 
 ## Features
 
@@ -83,4 +83,7 @@ In addition, the arguments array is exposed via `this.args`.
 
 MIT
 
+[Build Status]: http://img.shields.io/travis/mantoni/glob-events.js.svg
+[SemVer]: http://img.shields.io/:semver-%E2%9C%93-brightgreen.svg
+[License]: http://img.shields.io/npm/l/glob-events.svg
 [glob-tree match expressions]: https://github.com/mantoni/glob-tree.js#match-expressions
