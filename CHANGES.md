@@ -1,5 +1,16 @@
 # Changes
 
+## 1.0.0
+
+- Use `glob-store` 1.0
+- Support config objects for listener registration with custom scope
+- Move util into fixture to work around a browserify issue
+- Pass `opts` to `glob-store`
+- Do not emit "remove" events if there is nothing to remove
+- Throw if "error" event is emitted and and there are no listeners
+- Simplify build process with Mochify
+- Run tests in real browsers with SauceLabs
+
 ## 0.6.0
 
 - Invoke `'error'` listener if there was an exception
