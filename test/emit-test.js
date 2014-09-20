@@ -255,8 +255,12 @@ describe('emit', function () {
 
     assert.equal(l.calls.length, 1);
     assert.deepEqual(l.calls[0].args, [error]);
-    assert.deepEqual(l.calls[0].scope.event, 'a');
-    assert.deepEqual(l.calls[0].scope.args, [42, 'xyz']);
+    assert.deepEqual(l.calls[0].scope.event, 'error');
+    assert.deepEqual(l.calls[0].scope.args, [error]);
+    assert.deepEqual(l.calls[0].scope.cause, {
+      event : 'a',
+      args  : [42, 'xyz']
+    });
   });
 
   it('does not count wildcard listeners as error handlers', function () {
@@ -276,6 +280,51 @@ describe('emit', function () {
     assert.strictEqual(err, error);
     assert.equal(l.calls.length, 1);
     assert.deepEqual(l.calls[0].args, [42]);
+  });
+
+  it('throws if event is "error" and no listener is registered', function () {
+    var err = new Error('Whoups');
+
+    assert.throws(function () {
+      e.emit('error', err);
+    }, /Whoups/);
+  });
+
+  it('does not invoke matchers for error events', function () {
+    var m = util.stub();
+    var l = util.stub();
+    e.on('*', m);
+    e.on('error', l);
+
+    e.emit('error', new Error());
+
+    assert.equal(m.calls.length, 0);
+    assert.equal(l.calls.length, 1);
+  });
+
+  it('emits an error event for each caught error', function () {
+    var e1 = new Error();
+    var e2 = new Error();
+    var l = util.stub();
+    e.on('error', l);
+    e.on('a', function () { throw e1; });
+    e.on('a', function () { throw e2; });
+
+    e.emit('a');
+
+    assert.equal(l.calls.length, 2);
+    assert.equal(l.calls[0].args[0], e1);
+    assert.equal(l.calls[1].args[0], e2);
+  });
+
+  it('detects error in error handler', function () {
+    e.on('error', function () {
+      throw new Error('ouch');
+    });
+
+    assert.throws(function () {
+      e.emit('error', new Error());
+    }, /ouch/);
   });
 
 });
