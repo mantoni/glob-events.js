@@ -64,6 +64,15 @@ Listeners are invoked with a special scope object. If an object is passed to
 `emit` as the event (see Options), that object is used as the scope object.
 In addition, the arguments array is exposed via `this.args`.
 
+It is also possible to bind individual listeners to specific scope objects:
+
+```js
+emitter.addListener({
+  event : 'some.event',
+  scope : this
+}, function () { ... });
+```
+
 ### Events
 
 - `newListener`: Emitted by `addListener`, `on` and `once` with the event name
