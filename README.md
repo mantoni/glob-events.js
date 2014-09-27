@@ -37,7 +37,7 @@ var emitter = new Emitter();
   descibed in the [glob-tree match expressions][].
 - `addListener(event, fn)` / `on(event, fn)`: Registers a listener for an event
 - `once(event, fn)`: Registers a listener for an event that is automatically
-  removed on the first invokation
+  removed on the first invocation
 - `removeListener(event, fn)`: Unregisteres a listener for an event
 - `removeAllListeners([event])`: Unregisters all listeners, or all listeners
   for the given event. Matching rules are not applied.
