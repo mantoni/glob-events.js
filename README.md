@@ -101,7 +101,11 @@ emitter.addListener({
   this event.
 - `error`: Emitted by `emit` if a listener throws an exception. The only
   argument is the caught exception. The original event's scope is exposed on
-  `this.cause` (e.g. the original event is `this.cause.event`).
+  `this.cause`  with these properties:
+    - `event`: The event that caused the exception
+    - `fn`: The function that threw the exception
+    - `scope`: The scope the function was executed with
+    - `args`: The arguments that where passed to the function
 
 ## TODO
 
