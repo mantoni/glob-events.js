@@ -45,8 +45,14 @@ var emitter = new Emitter();
   for the given event. Matching rules are applied on the event name as
   described in the [glob-tree match expressions][].
 - `iterator([event][, options])`: Exposes the iterator used to retrieve all
-  listeners, or all listeners for a given event. Note: When using `once`, the
-  function returned by the iterator is not the same as the registered function.
+  listeners, or all listeners for a given event. Each iterator entry has these
+  properties:
+    - `event`: The event name that was used to register the function
+    - `fn`: The registered function. Note: When using `once`, this
+      is not the same as the registered function.
+    - `orig`: The original registered function, only available for
+      entries that where added with `once`.
+    - `scope`: The scopr to use when invoking the function.
 
 ### Options
 
