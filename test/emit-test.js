@@ -245,9 +245,11 @@ describe('emit', function () {
 
   it('invokes a registered error listener instead of throwing', function () {
     var error = new Error();
-    e.addListener('a', function () {
+    var fn = function () {
       throw error;
-    });
+    };
+    var scope = {};
+    e.addListener({ event : 'a', scope : scope }, fn);
     var l = util.stub();
     e.addListener('error', l);
 
@@ -259,6 +261,8 @@ describe('emit', function () {
     assert.deepEqual(l.calls[0].scope.args, [error]);
     assert.deepEqual(l.calls[0].scope.cause, {
       event : 'a',
+      fn    : fn,
+      scope : scope,
       args  : [42, 'xyz']
     });
   });

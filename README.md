@@ -30,6 +30,16 @@ var Emitter = require('glob-events').Emitter;
 var emitter = new Emitter();
 ```
 
+## API
+
+- `Emitter([opts])`: Constructor function, accepting these options:
+    - `reverse`: Whether to invoke listeners in reverse insertion order.
+      Defaults to `false`.
+- `toScope(args)`: Converts the given arguments array into a scope object that
+  can be used with `invoke`.
+
+The constructor `opts` are passed to the [glob-store][] constructor.
+
 ## Emitter API
 
 - `emit(event[, ...])`: Invokes all listeners registered for the given event
@@ -53,6 +63,9 @@ var emitter = new Emitter();
     - `orig`: The original registered function, only available for
       entries that where added with `once`.
     - `scope`: The scopr to use when invoking the function.
+- `invoke(iterator, scope)`: Invokes the functions returned by an iterator on
+  the given `scope` with the arguments from `scope.args`. This function is
+  internally used by `emit`.
 
 ### Options
 
@@ -102,4 +115,5 @@ MIT
 [SemVer]: http://img.shields.io/:semver-%E2%9C%93-brightgreen.svg
 [License]: http://img.shields.io/npm/l/glob-events.svg
 [EventEmitter]: http://nodejs.org/api/events.html
+[glob-store]: https://github.com/mantoni/glob-store.js
 [glob-tree match expressions]: https://github.com/mantoni/glob-tree.js#match-expressions
