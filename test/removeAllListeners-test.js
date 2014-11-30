@@ -107,4 +107,23 @@ describe('removeAllListeners', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('emits custom remove event', function () {
+    e = new Emitter({
+      removeEvent : 'bye'
+    });
+    var a = util.noop();
+    var b = util.noop();
+    var s = util.stub();
+    e.addListener('bye', s);
+    e.addListener('a.*', a);
+    e.addListener('a.b', b);
+    e.addListener('b.c', util.noop());
+
+    e.removeAllListeners('a.*');
+
+    assert.equal(s.calls.length, 2);
+    assert.deepEqual(s.calls[0].args, ['a.*', a]);
+    assert.deepEqual(s.calls[1].args, ['a.b', b]);
+  });
+
 });

@@ -107,4 +107,19 @@ describe('removeListener', function () {
     assert.equal(s.calls.length, 1);
   });
 
+  it('emits custom remove event', function () {
+    e = new Emitter({
+      removeEvent : 'bye'
+    });
+    var s = util.stub();
+    var f = util.noop();
+
+    e.addListener('bye', s);
+    e.addListener('a', f);
+    e.removeListener('a', f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+  });
+
 });

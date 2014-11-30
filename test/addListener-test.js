@@ -79,4 +79,18 @@ describe('addListener', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('emits custom add event', function () {
+    e = new Emitter({
+      addEvent : 'welcome'
+    });
+    var s = util.stub();
+    var f = util.noop();
+
+    e.addListener('welcome', s);
+    e.addListener('a', f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+  });
+
 });
