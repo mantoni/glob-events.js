@@ -144,4 +144,13 @@ describe('iterator', function () {
     assert.deepEqual(i.toArray(), []);
   });
 
+  it('does not return matchers for event name "error"', function () {
+    var f = util.noop();
+    e.addListener('*', f);
+
+    var i = e.iterator('error');
+
+    assert.deepEqual(i.toArray(), []);
+  });
+
 });
