@@ -49,4 +49,10 @@ describe('toScope', function () {
     }('event', 42, true, ['x']));
   });
 
+  it('retains custom args property', function () {
+    var s = events.toScope([{ event : 'event', args : [42, true, 'abc'] }]);
+
+    assert.deepEqual(s.args, [42, true, 'abc']);
+  });
+
 });
