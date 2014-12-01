@@ -122,4 +122,17 @@ describe('removeListener', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('invokes "removeListener" listener with correct scope', function () {
+    var l = util.stub();
+    var f = util.noop();
+    e.addListener('removeListener', l);
+
+    e.addListener('a', f);
+    e.removeListener('a', f);
+
+    var s = l.calls[0].scope;
+    assert.equal(s.event, 'removeListener');
+    assert.deepEqual(s.args, ['a', f]);
+  });
+
 });

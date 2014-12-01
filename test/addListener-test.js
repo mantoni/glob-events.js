@@ -93,4 +93,16 @@ describe('addListener', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('invokes "newListener" listener with correct scope', function () {
+    var l = util.stub();
+    var f = util.noop();
+    e.addListener('newListener', l);
+
+    e.addListener('a', f);
+
+    var s = l.calls[0].scope;
+    assert.equal(s.event, 'newListener');
+    assert.deepEqual(s.args, ['a', f]);
+  });
+
 });

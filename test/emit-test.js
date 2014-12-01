@@ -331,4 +331,22 @@ describe('emit', function () {
     }, /ouch/);
   });
 
+  it('does not invoke "newListener" on wildcard emit', function () {
+    var l = util.stub();
+    e.on('newListener', l);
+
+    e.emit('*');
+
+    assert.equal(l.calls.length, 0);
+  });
+
+  it('does not invoke "removeListener" on wildcard emit', function () {
+    var l = util.stub();
+    e.on('removeListener', l);
+
+    e.emit('*');
+
+    assert.equal(l.calls.length, 0);
+  });
+
 });
