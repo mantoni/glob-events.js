@@ -1,5 +1,14 @@
 # Changes
 
+## 1.1.0
+
+- Add support for custom "add" and "remove" events
+- Add `event` name to objects that are returned by iterators
+- Add `fn` and actual `scope` to `this.cause` for error events
+- Split `emit` into `toScope(args)` and `invoke(iterator, scope)`
+- Reuse `iterator` function in `emit`
+- Do not invoke "newListner" and "removeListener" functions for `*` event
+
 ## 1.0.0
 
 - Use `glob-store` 1.0
