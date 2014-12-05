@@ -175,4 +175,21 @@ describe('invoke', function () {
     }, /ouch/);
   });
 
+  it('exposes args on custom listener scope', function () {
+    e.on({ event : 'a', scope : {} }, function () {
+      assert.deepEqual(this.args, [true, 42]);
+    });
+
+    e.invoke(e.iterator('a'), { event : 'a', args : [true, 42] });
+  });
+
+  it('does not store args on custom scope', function () {
+    var o = { event : 'a', scope : {} };
+    e.on(o, util.noop());
+
+    e.invoke(e.iterator('a'), { event : 'a', args : [true, 42] });
+
+    assert.equal(o.scope.args, undefined);
+  });
+
 });
