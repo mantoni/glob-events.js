@@ -1,5 +1,11 @@
 # Changes
 
+## 1.1.1
+
+- Retain custom args property in `toScope`
+- Prefer arguments over `scope.args` in `toScope`
+- Expose `args` on listener scope object
+
 ## 1.1.0
 
 - Add support for custom "add" and "remove" events
