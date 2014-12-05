@@ -55,4 +55,10 @@ describe('toScope', function () {
     assert.deepEqual(s.args, [42, true, 'abc']);
   });
 
+  it('overrides custom args property with new args', function () {
+    var s = events.toScope([{ event : 'event', args : [42] }, 'new', 'stuff']);
+
+    assert.deepEqual(s.args, ['new', 'stuff']);
+  });
+
 });
