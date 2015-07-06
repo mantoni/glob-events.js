@@ -1,5 +1,9 @@
 # Changes
 
+## 1.2.1
+
+- Do not change aritiy of added once listener
+
 ## 1.2.0
 
 - Add `removeMatchingListeners(event)`
