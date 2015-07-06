@@ -1,5 +1,10 @@
 # Changes
 
+## 1.2.0
+
+- Add `removeMatchingListeners(event)`
+- Only emit remove event in `removeAllListeners` for exact matches
+
 ## 1.1.1
 
 - Retain custom args property in `toScope`
