@@ -56,7 +56,7 @@ The constructor `opts` are passed to the [glob-store][] constructor.
 - `removeAllListeners([event])`: Unregisters all listeners, or all listeners
   for the given event. Matching rules are not applied.
 - `removeMatchingListeners(event)`: Unregisters all listeners matching the
-  given event name as descirbed in the [glob-tree match expressions][].
+  given event name as described in the [glob-tree match expressions][].
 - `listeners([event][, options])`: Returns all listeners, or all listeners
   for the given event. Matching rules are applied on the event name as
   described in the [glob-tree match expressions][].
