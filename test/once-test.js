@@ -99,4 +99,16 @@ describe('once', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it("does not change arity of added listener", function () {
+    e.once('a', function (a, b, c) {
+      /*jslint unparam: true*/
+      return;
+    });
+
+    var l = e.iterator('a').next().fn;
+
+    assert.equal(l.length, 3);
+    l(); // coverage
+  });
+
 });
