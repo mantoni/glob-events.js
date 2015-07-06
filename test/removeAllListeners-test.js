@@ -52,18 +52,17 @@ describe('removeAllListeners', function () {
 
   it('emits "removeListener" for each named listener', function () {
     var a = util.noop();
-    var b = util.noop();
     var s = util.stub();
     e.addListener('removeListener', s);
+    e.addListener('**', util.noop());
     e.addListener('a.*', a);
-    e.addListener('a.b', b);
+    e.addListener('a.b', util.noop());
     e.addListener('b.c', util.noop());
 
     e.removeAllListeners('a.*');
 
-    assert.equal(s.calls.length, 2);
+    assert.equal(s.calls.length, 1);
     assert.deepEqual(s.calls[0].args, ['a.*', a]);
-    assert.deepEqual(s.calls[1].args, ['a.b', b]);
   });
 
   it('emits "removeListener" for all listeners', function () {
@@ -112,18 +111,17 @@ describe('removeAllListeners', function () {
       removeEvent : 'bye'
     });
     var a = util.noop();
-    var b = util.noop();
     var s = util.stub();
     e.addListener('bye', s);
+    e.addListener('**', util.noop());
     e.addListener('a.*', a);
-    e.addListener('a.b', b);
+    e.addListener('a.b', util.noop());
     e.addListener('b.c', util.noop());
 
     e.removeAllListeners('a.*');
 
-    assert.equal(s.calls.length, 2);
+    assert.equal(s.calls.length, 1);
     assert.deepEqual(s.calls[0].args, ['a.*', a]);
-    assert.deepEqual(s.calls[1].args, ['a.b', b]);
   });
 
 });
