@@ -172,6 +172,17 @@ describe('emit', function () {
     assert.strictEqual(l.calls[0].scope.listeners, undefined);
   });
 
+  it('exposes emitter in scope', function () {
+    var l = util.stub();
+    e.addListener('a', l);
+
+    e.emit({
+      event : 'a'
+    });
+
+    assert.strictEqual(l.calls[0].scope.emitter, e);
+  });
+
   it('passes on custom properties on scope', function () {
     var l = util.stub();
     e.addListener('a', l);

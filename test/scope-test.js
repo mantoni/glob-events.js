@@ -61,4 +61,30 @@ describe('toScope', function () {
     assert.deepEqual(s.args, ['new', 'stuff']);
   });
 
+  it('adds object emitter', function () {
+    var e = {};
+    var s = events.toScope(['event'], e);
+
+    assert.strictEqual(s.emitter, e);
+  });
+
+  it('adds null emitter', function () {
+    var s = events.toScope(['event'], null);
+
+    assert.strictEqual(s.emitter, null);
+  });
+
+  it('adds undefined emitter', function () {
+    var s = events.toScope(['event'], undefined);
+
+    assert.strictEqual(s.emitter, undefined);
+    assert.equal(s.hasOwnProperty('emitter'), true);
+  });
+
+  it('does not add emitter if not given', function () {
+    var s = events.toScope(['event']);
+
+    assert.equal(s.hasOwnProperty('emitter'), false);
+  });
+
 });

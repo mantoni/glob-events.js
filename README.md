@@ -39,8 +39,9 @@ var emitter = new Emitter();
       `"newListener"`.
     - `removeEvent`: The event to fire when listeners are removed. Defaults to
       `"removeListener"`.
-- `toScope(args)`: Converts the given arguments array into a scope object that
-  can be used with `invoke`.
+- `toScope(args[, emitter])`: Converts the given arguments array into a scope
+  object that can be used with `invoke`. If an `emitter` is given, it is added
+  to the scope object.
 
 The constructor `opts` are passed to the [glob-store][] constructor.
 
@@ -68,7 +69,7 @@ The constructor `opts` are passed to the [glob-store][] constructor.
       is not the same as the registered function.
     - `orig`: The original registered function, only available for
       entries that where added with `once`.
-    - `scope`: The scopr to use when invoking the function.
+    - `scope`: The scope to use when invoking the function.
 - `invoke(iterator, scope)`: Invokes the functions returned by an iterator on
   the given `scope` with the arguments from `scope.args`. This function is
   internally used by `emit`.
@@ -87,7 +88,11 @@ and any of the above options.
 
 Listeners are invoked with a special scope object. If an object is passed to
 `emit` as the event (see Options), that object is used as the scope object.
-In addition, the arguments array is exposed via `this.args`.
+The scope object always has these properties:
+
+- `event`: The event that was emitted
+- `args`: The arguments that where passed after the event name.
+- `emitter`: The event emitter instance
 
 It is also possible to bind individual listeners to specific scope objects:
 
