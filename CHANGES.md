@@ -1,5 +1,10 @@
 # Changes
 
+## 1.3.0
+
+- Expose `emitter` in scope
+- Fix `removeMatchingListeners` to not remove "removeListener" too early
+
 ## 1.2.1
 
 - Do not change aritiy of added once listener
