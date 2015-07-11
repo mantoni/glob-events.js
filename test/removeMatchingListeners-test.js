@@ -114,4 +114,20 @@ describe('removeMatchingListeners', function () {
     assert.deepEqual(s.calls[2].args, ['a.b', b]);
   });
 
+  it('emits "removeListener" properly if event is "*"', function () {
+    var s = util.stub();
+    var a = util.noop();
+    var b = util.noop();
+    e.addListener('a', a);
+    e.addListener('removeListener', s);
+    e.addListener('b', b);
+
+    e.removeMatchingListeners('*');
+
+    assert.equal(s.calls.length, 3);
+    assert.deepEqual(s.calls[0].args, ['a', a]);
+    assert.deepEqual(s.calls[1].args, ['removeListener', s]);
+    assert.deepEqual(s.calls[2].args, ['b', b]);
+  });
+
 });
