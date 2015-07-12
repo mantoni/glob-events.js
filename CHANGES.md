@@ -1,5 +1,11 @@
 # Changes
 
+## 1.4.0
+
+- Allow to configure `internalEvents`
+- Add `isInternalEvent(event)`
+- Treat "error" events as internal
+
 ## 1.3.0
 
 - Expose `emitter` in scope
