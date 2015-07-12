@@ -360,4 +360,26 @@ describe('emit', function () {
     assert.equal(l.calls.length, 0);
   });
 
+  it('does not invoke "error" on wildcard emit', function () {
+    var l = util.stub();
+    e.on('error', l);
+
+    e.emit('*');
+
+    assert.equal(l.calls.length, 0);
+  });
+
+  it('does not invoke internal event on wildcard emit', function () {
+    e = new Emitter({
+      internalEvents: ['foo', 'bar']
+    });
+    var l = util.stub();
+    e.on('foo', l);
+    e.on('bar', l);
+
+    e.emit('*');
+
+    assert.equal(l.calls.length, 0);
+  });
+
 });
