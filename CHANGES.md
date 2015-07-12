@@ -1,5 +1,9 @@
 # Changes
 
+## 1.4.1
+
+- Don't return wildcard listeners for `newListener` and `removeListener`
+
 ## 1.4.0
 
 - Allow to configure `internalEvents`
