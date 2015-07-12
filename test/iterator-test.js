@@ -144,13 +144,24 @@ describe('iterator', function () {
     assert.deepEqual(i.toArray(), []);
   });
 
-  it('does not return matchers for event name "error"', function () {
-    var f = util.noop();
-    e.addListener('*', f);
+  function doesNotReturnMatchersForEventName(event) {
+    return function () {
+      var f = util.noop();
+      e.addListener('*', f);
 
-    var i = e.iterator('error');
+      var i = e.iterator(event);
 
-    assert.deepEqual(i.toArray(), []);
-  });
+      assert.deepEqual(i.toArray(), []);
+    };
+  }
+
+  it('does not return matchers for event name "error"',
+     doesNotReturnMatchersForEventName('error'));
+
+  it('does not return matchers for event name "newListener"',
+     doesNotReturnMatchersForEventName('newListener'));
+
+  it('does not return matchers for event name "removeListener"',
+     doesNotReturnMatchersForEventName('removeListener'));
 
 });
