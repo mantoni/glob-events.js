@@ -76,6 +76,10 @@ The constructor `opts` are passed to the [glob-store][] constructor.
 - `invoke(iterator, scope)`: Invokes the functions returned by an iterator on
   the given `scope` with the arguments from `scope.args`. This function is
   internally used by `emit`.
+- `isInternalEvent(event)`: Returns `true` if the given event is an internal
+  event. These are the "error" event, the add and remove events and the
+  configured internal events.
+
 
 ### Options
 
