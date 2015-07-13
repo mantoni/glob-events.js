@@ -105,4 +105,16 @@ describe('addListener', function () {
     assert.deepEqual(s.args, ['a', f]);
   });
 
+  it('does not change arity of "newListener" listener', function () {
+    e.addListener('newListener', function (a, b, c) {
+      /*jslint unparam: true*/
+      return;
+    });
+
+    var l = e.iterator('newListener').next().fn;
+
+    assert.equal(l.length, 3);
+    l.call({}); // coverage
+  });
+
 });
