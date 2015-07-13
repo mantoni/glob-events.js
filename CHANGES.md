@@ -1,5 +1,9 @@
 # Changes
 
+## 1.4.2
+
+- Retain arity for listeners on internal events
+
 ## 1.4.1
 
 - Don't return wildcard listeners for `newListener` and `removeListener`
