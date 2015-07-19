@@ -14,25 +14,25 @@ var util = require('./fixture/util');
 
 
 describe('removeListener', function () {
-  var e;
-
-  beforeEach(function () {
-    e = new Emitter();
-  });
 
   it('throws if first arg is null', function () {
+    var e = new Emitter();
+
     assert.throws(function () {
       e.removeListener(null, util.noop());
     }, TypeError);
   });
 
   it('throws if second arg is null', function () {
+    var e = new Emitter();
+
     assert.throws(function () {
       e.removeListener('a.b', null);
     }, TypeError);
   });
 
   it('removes the given listener', function () {
+    var e = new Emitter();
     var fn1 = util.noop();
     var fn2 = util.noop();
     e.addListener('a.b', fn1);
@@ -44,6 +44,7 @@ describe('removeListener', function () {
   });
 
   it('removes once listener', function () {
+    var e = new Emitter();
     var f = util.stub();
     e.once('a', f);
 
@@ -54,6 +55,7 @@ describe('removeListener', function () {
   });
 
   it('emits "removeListener" event', function () {
+    var e = new Emitter();
     var s = util.stub();
     var f = util.noop();
 
@@ -65,7 +67,25 @@ describe('removeListener', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('emits "removeListener" event on custom internal emitter', function () {
+    var i = new Emitter();
+    var e = new Emitter({
+      internalEmitter: i
+    });
+    var s = util.stub();
+    var f = util.noop();
+
+    i.addListener('removeListener', s);
+    e.addListener('a', f);
+    e.removeListener('a', f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+    assert.equal(s.calls[0].scope.emitter, i);
+  });
+
   it('does not emit "removeListener" event to matchers', function () {
+    var e = new Emitter();
     var s = util.stub();
     var f = util.noop();
 
@@ -77,6 +97,7 @@ describe('removeListener', function () {
   });
 
   it('emits function added with once', function () {
+    var e = new Emitter();
     var s = util.stub();
     var f = util.noop();
     e.addListener('removeListener', s);
@@ -89,6 +110,7 @@ describe('removeListener', function () {
   });
 
   it('does not emit event if nothing found', function () {
+    var e = new Emitter();
     var s = util.stub();
     e.addListener('removeListener', s);
 
@@ -98,6 +120,7 @@ describe('removeListener', function () {
   });
 
   it('does not remove other listener if nothing found', function () {
+    var e = new Emitter();
     var s = util.stub();
     e.addListener('a', s);
 
@@ -108,7 +131,7 @@ describe('removeListener', function () {
   });
 
   it('emits custom remove event', function () {
-    e = new Emitter({
+    var e = new Emitter({
       removeEvent : 'bye'
     });
     var s = util.stub();
@@ -122,7 +145,26 @@ describe('removeListener', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('emits custom remove event on custom internal emitter', function () {
+    var i = new Emitter();
+    var e = new Emitter({
+      internalEmitter : i,
+      removeEvent     : 'bye'
+    });
+    var s = util.stub();
+    var f = util.noop();
+
+    i.addListener('bye', s);
+    e.addListener('a', f);
+    e.removeListener('a', f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+    assert.equal(s.calls[0].scope.emitter, i);
+  });
+
   it('invokes "removeListener" listener with correct scope', function () {
+    var e = new Emitter();
     var l = util.stub();
     var f = util.noop();
     e.addListener('removeListener', l);

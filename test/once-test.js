@@ -14,19 +14,18 @@ var util = require('./fixture/util');
 
 
 describe('once', function () {
-  var e;
-
-  beforeEach(function () {
-    e = new Emitter();
-  });
 
   it('throws if first arg is null', function () {
+    var e = new Emitter();
+
     assert.throws(function () {
       e.once(null);
     }, TypeError);
   });
 
   it('throws if second arg is not a function', function () {
+    var e = new Emitter();
+
     assert.throws(function () {
       e.once('a.b', null);
     }, TypeError);
@@ -39,6 +38,7 @@ describe('once', function () {
   });
 
   it('invokes listener on first emit', function () {
+    var e = new Emitter();
     var called = 0;
     e.once('a', function () {
       called++;
@@ -52,6 +52,7 @@ describe('once', function () {
   });
 
   it('passes arguments', function () {
+    var e = new Emitter();
     var args;
     e.once('such', function () {
       args = Array.prototype.slice.call(arguments);
@@ -63,6 +64,7 @@ describe('once', function () {
   });
 
   it('emits "newListener" event', function () {
+    var e = new Emitter();
     var s = util.stub();
     var f = util.noop();
 
@@ -73,7 +75,23 @@ describe('once', function () {
     assert.deepEqual(s.calls[0].args, ['a', f]);
   });
 
+  it('emits "newListener" event on custom internal emitter', function () {
+    var i = new Emitter();
+    var e = new Emitter({
+      internalEmitter : i
+    });
+    var s = util.stub();
+    var f = util.noop();
+
+    i.addListener('newListener', s);
+    e.once('a', f);
+
+    assert.equal(s.calls.length, 1);
+    assert.deepEqual(s.calls[0].args, ['a', f]);
+  });
+
   it('does not emit "newListener" event to matchers', function () {
+    var e = new Emitter();
     var s = util.stub();
 
     e.addListener('*', s);
@@ -83,12 +101,15 @@ describe('once', function () {
   });
 
   it('allows first argument to be object with event property', function () {
+    var e = new Emitter();
+
     assert.doesNotThrow(function () {
       e.once({ event : 'a' }, util.noop());
     });
   });
 
   it('emits "newListener" event if configured with object', function () {
+    var e = new Emitter();
     var s = util.stub();
     var f = util.noop();
 
@@ -100,6 +121,7 @@ describe('once', function () {
   });
 
   it("does not change arity of added listener", function () {
+    var e = new Emitter();
     e.once('a', function (a, b, c) {
       /*jslint unparam: true*/
       return;

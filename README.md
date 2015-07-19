@@ -42,6 +42,8 @@ var emitter = new Emitter();
     - `internalEvents`: An array of internal events. Listeners that are
       registered for internal events are not invoked when emitting `*`. The
       `newListener`, `removeListener` and `"error"` events are always internal.
+    - `internalEmitter`: An emitter to use for internal events. Defaults to
+      `this`
 - `toScope(args[, emitter])`: Converts the given arguments array into a scope
   object that can be used with `invoke`. If an `emitter` is given, it is added
   to the scope object.

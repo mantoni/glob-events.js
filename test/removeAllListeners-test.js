@@ -14,13 +14,9 @@ var util = require('./fixture/util');
 
 
 describe('removeAllListeners', function () {
-  var e;
-
-  beforeEach(function () {
-    e = new Emitter();
-  });
 
   it('removes all listeners if called without args', function () {
+    var e = new Emitter();
     e.addListener('a', util.noop());
     e.addListener('b.c', util.noop());
 
@@ -30,6 +26,7 @@ describe('removeAllListeners', function () {
   });
 
   it('removes the named listeners', function () {
+    var e = new Emitter();
     var b = util.noop();
     e.addListener('a', util.noop());
     e.addListener('a', util.noop());
@@ -41,6 +38,7 @@ describe('removeAllListeners', function () {
   });
 
   it('removes only the exact matching listeners', function () {
+    var e = new Emitter();
     var b = util.noop();
     e.addListener('a.*', util.noop());
     e.addListener('a.b', b);
@@ -51,6 +49,7 @@ describe('removeAllListeners', function () {
   });
 
   it('emits "removeListener" for each named listener', function () {
+    var e = new Emitter();
     var a = util.noop();
     var s = util.stub();
     e.addListener('removeListener', s);
@@ -66,6 +65,7 @@ describe('removeAllListeners', function () {
   });
 
   it('emits "removeListener" for all listeners', function () {
+    var e = new Emitter();
     var a = util.noop();
     var b = util.noop();
     var c = util.noop();
@@ -84,7 +84,31 @@ describe('removeAllListeners', function () {
     assert.deepEqual(s.calls[3].args, ['b.c', c]);
   });
 
+  it('emits "removeListener" for all listeners on a custom internal emitter',
+    function () {
+      var i = new Emitter();
+      var e = new Emitter({
+        internalEmitter : i
+      });
+      var a = util.noop();
+      var b = util.noop();
+      var c = util.noop();
+      var s = util.stub();
+      i.addListener('removeListener', s);
+      e.addListener('a.*', a);
+      e.addListener('a.b', b);
+      e.addListener('b.c', c);
+
+      e.removeAllListeners();
+
+      assert.equal(s.calls.length, 3);
+      assert.deepEqual(s.calls[0].args, ['a.*', a]);
+      assert.deepEqual(s.calls[1].args, ['a.b', b]);
+      assert.deepEqual(s.calls[2].args, ['b.c', c]);
+    });
+
   it('doea not emit "removeListener" on matchers', function () {
+    var e = new Emitter();
     var s = util.stub();
     e.addListener('*', s);
     e.addListener('a', util.noop());
@@ -95,6 +119,7 @@ describe('removeAllListeners', function () {
   });
 
   it('emits function added with once', function () {
+    var e = new Emitter();
     var s = util.stub();
     var f = util.noop();
     e.addListener('removeListener', s);
@@ -107,7 +132,7 @@ describe('removeAllListeners', function () {
   });
 
   it('emits custom remove event', function () {
-    e = new Emitter({
+    var e = new Emitter({
       removeEvent : 'bye'
     });
     var a = util.noop();

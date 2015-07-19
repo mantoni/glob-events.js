@@ -14,25 +14,25 @@ var util = require('./fixture/util');
 
 
 describe('invoke', function () {
-  var e;
-
-  beforeEach(function () {
-    e = new Emitter();
-  });
 
   it('throws if first arg is null', function () {
+    var e = new Emitter();
+
     assert.throws(function () {
       e.invoke(null);
     }, TypeError);
   });
 
   it('throws if second arg is missing', function () {
+    var e = new Emitter();
+
     assert.throws(function () {
       e.invoke(e.iterator('*'));
     }, TypeError);
   });
 
   it('invokes iterator functions with args', function () {
+    var e = new Emitter();
     var l1 = util.stub();
     var l2 = util.stub();
     e.addListener('a', l1);
@@ -47,6 +47,7 @@ describe('invoke', function () {
   });
 
   it('passes on custom scope', function () {
+    var e = new Emitter();
     var l = util.stub();
     e.addListener('a', l);
 
@@ -56,6 +57,7 @@ describe('invoke', function () {
   });
 
   it('invokes once listener with scope', function () {
+    var e = new Emitter();
     var l = util.stub();
     e.once('a', l);
 
@@ -65,6 +67,7 @@ describe('invoke', function () {
   });
 
   it('invokes listener with configured scope', function () {
+    var e = new Emitter();
     var l = util.stub();
     var s = {};
 
@@ -75,6 +78,7 @@ describe('invoke', function () {
   });
 
   it('invokes once listener with configured scope', function () {
+    var e = new Emitter();
     var l = util.stub();
     var s = {};
 
@@ -84,7 +88,8 @@ describe('invoke', function () {
     assert.strictEqual(l.calls[0].scope, s);
   });
 
-  it('invokes error listener with configured scope', function () {
+  it('invokes "error" listener with configured scope', function () {
+    var e = new Emitter();
     var l = util.stub();
     var s = {};
 
@@ -96,6 +101,7 @@ describe('invoke', function () {
   });
 
   it('invokes next listener if previous threw', function () {
+    var e = new Emitter();
     var error = new Error();
     e.addListener('a', function () {
       throw error;
@@ -106,15 +112,16 @@ describe('invoke', function () {
     var err;
     try {
       e.invoke(e.iterator('a'), {});
-    } catch (e) {
-      err = e;
+    } catch (e1) {
+      err = e1;
     }
 
     assert.strictEqual(err, error);
     assert.equal(l.calls.length, 1);
   });
 
-  it('invokes a registered error listener instead of throwing', function () {
+  it('invokes a registered "error" listener instead of throwing', function () {
+    var e = new Emitter();
     var error = new Error();
     var fn = function () {
       throw error;
@@ -138,7 +145,37 @@ describe('invoke', function () {
     });
   });
 
-  it('does not count wildcard listeners as error handlers', function () {
+  it('invokes a registered "error" listener on a custom internal emitter',
+    function () {
+      var i = new Emitter();
+      var e = new Emitter({
+        internalEmitter : i
+      });
+      var error = new Error();
+      var fn = function () {
+        throw error;
+      };
+      e.addListener('a', fn);
+      var l = util.stub();
+      i.addListener('error', l);
+      var scope = { event : 'a', args : [42, 'xyz'] };
+
+      e.invoke(e.iterator('a'), scope);
+
+      assert.equal(l.calls.length, 1);
+      assert.deepEqual(l.calls[0].args, [error]);
+      assert.deepEqual(l.calls[0].scope.event, 'error');
+      assert.deepEqual(l.calls[0].scope.args, [error]);
+      assert.deepEqual(l.calls[0].scope.cause, {
+        event : 'a',
+        fn    : fn,
+        args  : [42, 'xyz'],
+        scope : scope
+      });
+    });
+
+  it('does not count wildcard listeners as "error" handlers', function () {
+    var e = new Emitter();
     var error = new Error();
     e.addListener('a', function () {
       throw error;
@@ -149,8 +186,8 @@ describe('invoke', function () {
     var err;
     try {
       e.invoke(e.iterator('a'), { event : 'a' });
-    } catch (e) {
-      err = e;
+    } catch (e1) {
+      err = e1;
     }
     assert.strictEqual(err, error);
     assert.equal(l.calls.length, 1);
@@ -158,6 +195,7 @@ describe('invoke', function () {
   });
 
   it('throws if event is "error" and no listener is registered', function () {
+    var e = new Emitter();
     var err = new Error('Whoups');
 
     assert.throws(function () {
@@ -165,7 +203,8 @@ describe('invoke', function () {
     }, /Whoups/);
   });
 
-  it('detects error in error handler', function () {
+  it('detects error in "error" handler', function () {
+    var e = new Emitter();
     e.on('error', function () {
       throw new Error('ouch');
     });
@@ -176,6 +215,7 @@ describe('invoke', function () {
   });
 
   it('exposes args on custom listener scope', function () {
+    var e = new Emitter();
     e.on({ event : 'a', scope : {} }, function () {
       assert.deepEqual(this.args, [true, 42]);
     });
@@ -184,6 +224,7 @@ describe('invoke', function () {
   });
 
   it('does not store args on custom scope', function () {
+    var e = new Emitter();
     var o = { event : 'a', scope : {} };
     e.on(o, util.noop());
 
