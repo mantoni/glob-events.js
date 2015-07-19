@@ -1,7 +1,7 @@
 /*
  * glob-events.js
  *
- * Copyright (c) 2015 Maximilian Antoni <mail@maxantoni.de>
+ * Copyright (c) 2014-2015 Maximilian Antoni <mail@maxantoni.de>
  *
  * @license MIT
  */
