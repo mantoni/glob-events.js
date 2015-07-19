@@ -1,5 +1,9 @@
 # Changes
 
+## 1.5.0
+
+- Support configuring a separate emitter for internal events
+
 ## 1.4.2
 
 - Retain arity for listeners on internal events
