@@ -77,10 +77,18 @@ The constructor `opts` are passed to the [glob-store][] constructor.
     - `scope`: The scope to use when invoking the function.
 - `invoke(iterator, scope)`: Invokes the functions returned by an iterator on
   the given `scope` with the arguments from `scope.args`. This function is
-  internally used by `emit`.
+  internally used by `emit`. If a listener throws, `emitError` is used to emit
+  an error event.
 - `isInternalEvent(event)`: Returns `true` if the given event is an internal
   event. These are the "error" event, the add and remove events and the
   configured internal events.
+- `emitError(error, cause)`: Emits an `"error"` event with the given error as
+  the only argument. If `cause` is given, it is accessible in error listeners
+  via `this.cause`. A cause object should have these entries:
+      - `event`: The event that caused the exception
+      - `fn`: The function that threw the exception
+      - `scope`: The scope the function was executed with
+      - `args`: The arguments that where passed to the function
 
 
 ### Options
