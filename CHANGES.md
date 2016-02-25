@@ -1,5 +1,9 @@
 # Changes
 
+## 1.6.0
+
+- Expose `emitError`
+
 ## 1.5.0
 
 - Support configuring a separate emitter for internal events
