@@ -54,11 +54,11 @@ The constructor `opts` are passed to the [glob-store][] constructor.
 
 - `emit(event[, ...])`: Invokes all listeners registered for the given event
   with the optional arguments. Matching rules are applied on the event name as
-  descibed in the [glob-tree match expressions][].
+  described in the [glob-tree match expressions][].
 - `addListener(event, fn)` / `on(event, fn)`: Registers a listener for an event
 - `once(event, fn)`: Registers a listener for an event that is automatically
   removed on the first invocation
-- `removeListener(event, fn)`: Unregisteres a listener for an event
+- `removeListener(event, fn)`: Unregisters a listener for an event
 - `removeAllListeners([event])`: Unregisters all listeners, or all listeners
   for the given event. Matching rules are not applied.
 - `removeMatchingListeners(event)`: Unregisters all listeners matching the
